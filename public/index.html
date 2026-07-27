@@ -1,0 +1,509 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Kamal Muhamed Ahmed — Voice AI Engineer</title>
+  <meta name="description" content="Voice AI Engineer building production-ready Voice AI Agents that answer calls, qualify leads, book appointments, and take payments — built on LiveKit, Pipecat, VAPI, Retell, Twilio and Amazon Nova Sonic." />
+  <meta name="author" content="Kamal Muhamed Ahmed" />
+
+  <!-- Open Graph / social sharing -->
+  <meta property="og:type" content="website" />
+  <meta property="og:title" content="Kamal Muhamed Ahmed — Voice AI Engineer" />
+  <meta property="og:description" content="Production-ready Voice AI Agents that call, qualify, book, and take payments. Built to survive real calls — not just demos." />
+
+  <link rel="icon" type="image/svg+xml" href="favicon.svg" />
+
+  <!-- Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet" />
+
+  <link rel="stylesheet" href="css/styles.css?v=2" />
+</head>
+<body>
+  <!-- ============ NAVBAR ============ -->
+  <header class="nav" id="nav">
+    <div class="container nav__inner">
+      <a href="#home" class="brand" aria-label="Home">
+        <span class="brand__mark" aria-hidden="true">
+          <span></span><span></span><span></span><span></span><span></span>
+        </span>
+        <span class="brand__name">Kamal<span class="accent">.</span>AI</span>
+      </a>
+
+      <nav class="nav__links" id="navLinks" aria-label="Primary">
+        <a href="#projects">Projects</a>
+        <a href="#about">About</a>
+        <a href="#capabilities">What I Build</a>
+        <a href="#stack">Tech Stack</a>
+        <a href="#contact" class="nav__cta">Get in touch</a>
+      </nav>
+
+      <button class="nav__toggle" id="navToggle" aria-label="Toggle menu" aria-expanded="false">
+        <span></span><span></span><span></span>
+      </button>
+    </div>
+  </header>
+
+  <main>
+    <!-- ============ HERO ============ -->
+    <section class="hero" id="home">
+      <div class="hero__glow" aria-hidden="true"></div>
+      <div class="container hero__inner">
+        <p class="hero__eyebrow reveal">
+          <span class="pulse-dot" aria-hidden="true"></span>
+          Voice AI Engineer · Available for new projects
+        </p>
+
+        <h1 class="hero__title reveal">
+          I build <span class="grad">production-ready Voice AI Agents</span>
+          that call, qualify, book &amp; take payments.
+        </h1>
+
+        <p class="hero__sub reveal">
+          I design and ship voice agents that hold up on real calls — not just demos.
+          Low latency, durable execution, full observability, and deep integration with the
+          telephony, CRMs and tools your business already runs on.
+        </p>
+
+        <div class="hero__actions reveal">
+          <a href="#projects" class="btn btn--primary">View Projects</a>
+          <!-- <a href="https://www.loom.com/share/45499bc8747d4612a08d2fccf5a30a7c" target="_blank" rel="noopener" class="btn btn--ghost">
+            <svg viewBox="0 0 24 24" width="18" height="18" aria-hidden="true"><path fill="currentColor" d="M8 5v14l11-7z"/></svg>
+            Watch 60s Intro
+          </a> -->
+        </div>
+
+        <!-- animated waveform -->
+        <div class="waveform reveal" aria-hidden="true">
+          <span></span><span></span><span></span><span></span><span></span>
+          <span></span><span></span><span></span><span></span><span></span>
+          <span></span><span></span><span></span><span></span><span></span>
+          <span></span><span></span><span></span><span></span><span></span>
+          <span></span><span></span><span></span><span></span><span></span>
+          <span></span><span></span><span></span><span></span><span></span>
+        </div>
+
+        <ul class="hero__tools reveal" aria-label="Core technologies">
+          <li>LiveKit</li>
+          <!-- <li>Pipecat</li> -->
+          <li>VAPI</li>
+          <!-- <li>Retell</li> -->
+          <li>Real-time Voice AI</li>
+          <li>Twilio</li>
+          <li>WhatsApp Calling API</li>
+          <li>AI Automations</li>
+          <li>PydanticAI</li>
+          <li>FastAPI</li>
+        </ul>
+      </div>
+    </section>
+
+    <!-- ============ STATS ============ -->
+    <section class="stats" aria-label="Key results">
+      <div class="container stats__grid">
+        <div class="stat reveal">
+          <div class="stat__num" data-count="60" data-prefix="&lt;" data-suffix="s">&lt;60s</div>
+          <div class="stat__label">Lead response time</div>
+        </div>
+        <div class="stat reveal">
+          <div class="stat__num" data-count="400" data-suffix="%">400%</div>
+          <div class="stat__label">Faster lead conversion</div>
+        </div>
+        <div class="stat reveal">
+          <div class="stat__num" data-count="50" data-suffix="+">50+</div>
+          <div class="stat__label">Languages supported</div>
+        </div>
+        <div class="stat reveal">
+          <div class="stat__num" data-count="24" data-suffix="/7">24/7</div>
+          <div class="stat__label">Always-on availability</div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============ PROJECTS ============ -->
+    <section class="section" id="projects">
+      <div class="container">
+        <header class="section__head reveal">
+          <span class="section__kicker">Selected Work</span>
+          <h2 class="section__title">Voice AI Agents shipped to production</h2>
+          <p class="section__lead">
+            Each of these is a real, end-to-end system — from telephony and real-time voice
+            to orchestration, structured call analysis, CRM sync, and automated deployment.
+            Source code and demo videos included.
+          </p>
+        </header>
+
+        <div class="projects">
+          <!-- Project 1 -->
+          <article class="project reveal">
+            <a class="project__media" href="https://github.com/Kamal-Moha/WhatsApp-Voice-AI-Agent-t" target="_blank" rel="noopener" aria-label="WhatsApp Voice AI Agent on GitHub">
+              <div class="project__media-fallback project__media-fallback--wa">
+                <svg viewBox="0 0 24 24" width="54" height="54" aria-hidden="true"><path fill="currentColor" d="M12.04 2c-5.46 0-9.9 4.44-9.9 9.9 0 1.75.46 3.45 1.32 4.95L2 22l5.3-1.38a9.86 9.86 0 0 0 4.74 1.2h.01c5.46 0 9.9-4.44 9.9-9.9 0-2.64-1.03-5.13-2.9-7A9.82 9.82 0 0 0 12.04 2Zm0 18.02h-.01a8.2 8.2 0 0 1-4.18-1.15l-.3-.18-3.1.81.83-3.02-.2-.31a8.17 8.17 0 0 1-1.25-4.37c0-4.54 3.7-8.23 8.24-8.23 2.2 0 4.27.86 5.82 2.42a8.18 8.18 0 0 1 2.41 5.82c0 4.54-3.69 8.23-8.23 8.23Zm4.52-6.16c-.25-.12-1.47-.72-1.69-.81-.23-.08-.39-.12-.56.13-.16.25-.64.8-.79.97-.14.16-.29.18-.54.06-.25-.12-1.05-.39-2-1.23-.74-.66-1.24-1.47-1.38-1.72-.14-.25-.02-.39.11-.51.11-.11.25-.29.37-.43.13-.14.17-.25.25-.41.08-.16.04-.31-.02-.43-.06-.12-.56-1.34-.76-1.84-.2-.48-.4-.42-.56-.43h-.48c-.16 0-.43.06-.66.31-.22.25-.86.85-.86 2.07 0 1.22.89 2.4 1.01 2.56.12.16 1.75 2.67 4.23 3.74.59.26 1.05.41 1.41.52.59.19 1.13.16 1.56.1.48-.07 1.47-.6 1.68-1.18.21-.58.21-1.07.14-1.18-.06-.11-.22-.17-.47-.29Z"/></svg>
+                <span>WhatsApp Voice Agent</span>
+              </div>
+            </a>
+            <div class="project__body">
+              <div class="project__tagline">Inbound · Booking · Payments</div>
+              <h3 class="project__title">WhatsApp Voice AI Agent — Books Appointments &amp; Takes Payments</h3>
+              <p class="project__desc">
+                A voice agent that answers inbound WhatsApp calls, converses naturally to understand the
+                customer's needs, books the appointment, sends a payment link over WhatsApp, and confirms
+                with a receipt — the full booking-to-payment flow, autonomously, in 50+ languages.
+              </p>
+              <ul class="project__points">
+                <li>Answers WhatsApp calls 24/7 — no missed leads</li>
+                <li>End-to-end: conversation → booking → payment → receipt</li>
+                <li>Persistent, single-threaded conversation context</li>
+              </ul>
+              <div class="tags">
+                <span>LiveKit</span><span>Inngest</span><span>WhatsApp Calling API</span><span>Payments</span><span>Durable Execution</span>
+              </div>
+              <div class="project__links">
+                <a href="https://github.com/Kamal-Moha/WhatsApp-Voice-AI-Agent-t" target="_blank" rel="noopener" class="link link--code">
+                  <svg viewBox="0 0 24 24" width="16" height="16" aria-hidden="true"><path fill="currentColor" d="M12 .5A11.5 11.5 0 0 0 .5 12a11.5 11.5 0 0 0 7.86 10.92c.58.1.79-.25.79-.56v-2c-3.2.7-3.88-1.36-3.88-1.36-.53-1.34-1.29-1.7-1.29-1.7-1.05-.72.08-.7.08-.7 1.16.08 1.77 1.2 1.77 1.2 1.03 1.77 2.7 1.26 3.36.96.1-.75.4-1.26.73-1.55-2.56-.29-5.25-1.28-5.25-5.7 0-1.26.45-2.29 1.2-3.1-.12-.29-.52-1.46.11-3.05 0 0 .97-.31 3.18 1.18a11 11 0 0 1 5.8 0c2.2-1.49 3.17-1.18 3.17-1.18.63 1.59.23 2.76.11 3.05.75.81 1.2 1.84 1.2 3.1 0 4.43-2.7 5.4-5.27 5.69.41.36.78 1.06.78 2.14v3.17c0 .31.2.67.8.56A11.5 11.5 0 0 0 23.5 12 11.5 11.5 0 0 0 12 .5Z"/></svg>
+                  Source Code
+                </a>
+                <span class="link link--muted">Demo video in repo</span>
+              </div>
+            </div>
+          </article>
+
+          <!-- Project 2 -->
+          <article class="project reveal">
+            <button class="project__media js-video" type="button" data-yt="lUZ1KYucq_8" aria-label="Play demo of the Facebook Lead Ads Voice AI Agent">
+              <img class="project__thumb" src="https://img.youtube.com/vi/lUZ1KYucq_8/hqdefault.jpg" data-fallback="https://img.youtube.com/vi/lUZ1KYucq_8/hqdefault.jpg" alt="Demo thumbnail: Facebook Lead Ads Voice AI Agent" loading="lazy" />
+              <span class="project__play" aria-hidden="true">
+                <svg viewBox="0 0 24 24" width="26" height="26"><path fill="currentColor" d="M8 5v14l11-7z"/></svg>
+              </span>
+            </button>
+            <div class="project__body">
+              <div class="project__tagline">Outbound · Speed-to-Lead · Qualification</div>
+              <h3 class="project__title">Facebook Lead Ads — Instant Callback &amp; Qualifier</h3>
+              <p class="project__desc">
+                Meta Lead Ads flood you with cheap, low-intent form fills. This agent calls every new lead
+                in under 60 seconds, holds a natural conversation, filters out spam and bots, categorizes
+                intent (high / medium / low), books appointments, and logs a call summary to the CRM.
+              </p>
+              <ul class="project__points">
+                <li>Calls leads in &lt;60 seconds — before they go cold</li>
+                <li>Filters fake / spam leads, lowers customer acquisition cost</li>
+                <li>Structured call analysis synced to Google Sheets CRM</li>
+              </ul>
+              <div class="tags">
+                <span>LiveKit</span><span>Twilio</span><span>Inngest + FastAPI</span><span>PydanticAI</span><span>GCP Cloud Run</span><span>GitHub Actions</span>
+              </div>
+              <div class="project__links">
+                <a href="https://github.com/Kamal-Moha/Facebook-Lead-Ads-Voice-AI-Agent-Qualifier" target="_blank" rel="noopener" class="link link--code">
+                  <svg viewBox="0 0 24 24" width="16" height="16" aria-hidden="true"><path fill="currentColor" d="M12 .5A11.5 11.5 0 0 0 .5 12a11.5 11.5 0 0 0 7.86 10.92c.58.1.79-.25.79-.56v-2c-3.2.7-3.88-1.36-3.88-1.36-.53-1.34-1.29-1.7-1.29-1.7-1.05-.72.08-.7.08-.7 1.16.08 1.77 1.2 1.77 1.2 1.03 1.77 2.7 1.26 3.36.96.1-.75.4-1.26.73-1.55-2.56-.29-5.25-1.28-5.25-5.7 0-1.26.45-2.29 1.2-3.1-.12-.29-.52-1.46.11-3.05 0 0 .97-.31 3.18 1.18a11 11 0 0 1 5.8 0c2.2-1.49 3.17-1.18 3.17-1.18.63 1.59.23 2.76.11 3.05.75.81 1.2 1.84 1.2 3.1 0 4.43-2.7 5.4-5.27 5.69.41.36.78 1.06.78 2.14v3.17c0 .31.2.67.8.56A11.5 11.5 0 0 0 23.5 12 11.5 11.5 0 0 0 12 .5Z"/></svg>
+                  Source Code
+                </a>
+                <a href="https://www.youtube.com/watch?v=lUZ1KYucq_8" data-yt="lUZ1KYucq_8" class="link link--video js-video">
+                  <svg viewBox="0 0 24 24" width="16" height="16" aria-hidden="true"><path fill="currentColor" d="M23.5 6.2a3 3 0 0 0-2.1-2.1C19.5 3.6 12 3.6 12 3.6s-7.5 0-9.4.5A3 3 0 0 0 .5 6.2 31 31 0 0 0 0 12a31 31 0 0 0 .5 5.8 3 3 0 0 0 2.1 2.1c1.9.5 9.4.5 9.4.5s7.5 0 9.4-.5a3 3 0 0 0 2.1-2.1A31 31 0 0 0 24 12a31 31 0 0 0-.5-5.8ZM9.6 15.6V8.4l6.2 3.6-6.2 3.6Z"/></svg>
+                  Watch Demo
+                </a>
+              </div>
+            </div>
+          </article>
+
+          <!-- Project 3 -->
+          <article class="project reveal">
+            <button class="project__media js-video" type="button" data-yt="TpFIsc0SpBQ" aria-label="Play demo of the E-commerce Cart Recovery Voice AI Agent">
+              <img class="project__thumb" src="https://img.youtube.com/vi/TpFIsc0SpBQ/hqdefault.jpg" data-fallback="https://img.youtube.com/vi/TpFIsc0SpBQ/hqdefault.jpg" alt="Demo thumbnail: E-commerce cart recovery Voice AI Agent" loading="lazy" />
+              <span class="project__play" aria-hidden="true">
+                <svg viewBox="0 0 24 24" width="26" height="26"><path fill="currentColor" d="M8 5v14l11-7z"/></svg>
+              </span>
+            </button>
+            <div class="project__body">
+              <div class="project__tagline">Outbound · E-commerce · Cart Recovery</div>
+              <h3 class="project__title">Shopify Cart Recovery Voice Agent</h3>
+              <p class="project__desc">
+                7 out of 10 shoppers abandon their carts. This agent instantly calls customers who drop off
+                at checkout, uncovers why they left, answers their questions, and guides them back to
+                complete the purchase — voice recovery that beats email for time-sensitive carts.
+              </p>
+              <ul class="project__points">
+                <li>Shopify webhook triggers an instant recovery call</li>
+                <li>Real-time speech via Amazon Nova Sonic on LiveKit</li>
+                <li>Durable execution + Logfire observability for reliability</li>
+              </ul>
+              <div class="tags">
+                <span>LiveKit</span><span>Amazon Nova Sonic</span><span>Shopify Webhooks</span><span>Twilio</span><span>Inngest + FastAPI</span><span>Logfire</span>
+              </div>
+              <div class="project__links">
+                <a href="https://github.com/Kamal-Moha/Ecom-Voice-Agent---Recover-Abandoned-Carts" target="_blank" rel="noopener" class="link link--code">
+                  <svg viewBox="0 0 24 24" width="16" height="16" aria-hidden="true"><path fill="currentColor" d="M12 .5A11.5 11.5 0 0 0 .5 12a11.5 11.5 0 0 0 7.86 10.92c.58.1.79-.25.79-.56v-2c-3.2.7-3.88-1.36-3.88-1.36-.53-1.34-1.29-1.7-1.29-1.7-1.05-.72.08-.7.08-.7 1.16.08 1.77 1.2 1.77 1.2 1.03 1.77 2.7 1.26 3.36.96.1-.75.4-1.26.73-1.55-2.56-.29-5.25-1.28-5.25-5.7 0-1.26.45-2.29 1.2-3.1-.12-.29-.52-1.46.11-3.05 0 0 .97-.31 3.18 1.18a11 11 0 0 1 5.8 0c2.2-1.49 3.17-1.18 3.17-1.18.63 1.59.23 2.76.11 3.05.75.81 1.2 1.84 1.2 3.1 0 4.43-2.7 5.4-5.27 5.69.41.36.78 1.06.78 2.14v3.17c0 .31.2.67.8.56A11.5 11.5 0 0 0 23.5 12 11.5 11.5 0 0 0 12 .5Z"/></svg>
+                  Source Code
+                </a>
+                <a href="https://www.youtube.com/watch?v=TpFIsc0SpBQ" data-yt="TpFIsc0SpBQ" class="link link--video js-video">
+                  <svg viewBox="0 0 24 24" width="16" height="16" aria-hidden="true"><path fill="currentColor" d="M23.5 6.2a3 3 0 0 0-2.1-2.1C19.5 3.6 12 3.6 12 3.6s-7.5 0-9.4.5A3 3 0 0 0 .5 6.2 31 31 0 0 0 0 12a31 31 0 0 0 .5 5.8 3 3 0 0 0 2.1 2.1c1.9.5 9.4.5 9.4.5s7.5 0 9.4-.5a3 3 0 0 0 2.1-2.1A31 31 0 0 0 24 12a31 31 0 0 0-.5-5.8ZM9.6 15.6V8.4l6.2 3.6-6.2 3.6Z"/></svg>
+                  Watch Demo
+                </a>
+              </div>
+            </div>
+          </article>
+
+          <!-- Project 4 -->
+          <article class="project reveal">
+            <button class="project__media js-video" type="button" data-yt="waItX1pYJvQ" aria-label="Play demo of the Google Form Lead Qualification Voice AI Agent">
+              <img class="project__thumb" src="https://img.youtube.com/vi/waItX1pYJvQ/hqdefault.jpg" data-fallback="https://img.youtube.com/vi/waItX1pYJvQ/hqdefault.jpg" alt="Demo thumbnail: Google Form lead qualification Voice AI Agent" loading="lazy" />
+              <span class="project__play" aria-hidden="true">
+                <svg viewBox="0 0 24 24" width="26" height="26"><path fill="currentColor" d="M8 5v14l11-7z"/></svg>
+              </span>
+            </button>
+            <div class="project__body">
+              <div class="project__tagline">Outbound · Speed-to-Lead · Home Services</div>
+              <h3 class="project__title">Speed-to-Lead Agent for Google Form Submissions</h3>
+              <p class="project__desc">
+                Built for a plumbing company: the moment a lead submits a Google Form, the agent calls them
+                in under 60 seconds, qualifies the job, books it on the calendar, categorizes the lead, and
+                saves a call summary to the CRM — converting leads up to 400% faster, 24/7/365.
+              </p>
+              <ul class="project__points">
+                <li>Google Form submit → webhook → instant outbound call</li>
+                <li>Books jobs and records structured call summaries</li>
+                <li>Dockerized, deployed to GCP with GitHub Actions CI/CD</li>
+              </ul>
+              <div class="tags">
+                <span>LiveKit</span><span>Twilio</span><span>Inngest + FastAPI</span><span>PydanticAI</span><span>Google Apps Script</span><span>Docker</span><span>GCP</span>
+              </div>
+              <div class="project__links">
+                <a href="https://github.com/Kamal-Moha/Voice-AI-Agent-Lead-Qualification-Google-Form-" target="_blank" rel="noopener" class="link link--code">
+                  <svg viewBox="0 0 24 24" width="16" height="16" aria-hidden="true"><path fill="currentColor" d="M12 .5A11.5 11.5 0 0 0 .5 12a11.5 11.5 0 0 0 7.86 10.92c.58.1.79-.25.79-.56v-2c-3.2.7-3.88-1.36-3.88-1.36-.53-1.34-1.29-1.7-1.29-1.7-1.05-.72.08-.7.08-.7 1.16.08 1.77 1.2 1.77 1.2 1.03 1.77 2.7 1.26 3.36.96.1-.75.4-1.26.73-1.55-2.56-.29-5.25-1.28-5.25-5.7 0-1.26.45-2.29 1.2-3.1-.12-.29-.52-1.46.11-3.05 0 0 .97-.31 3.18 1.18a11 11 0 0 1 5.8 0c2.2-1.49 3.17-1.18 3.17-1.18.63 1.59.23 2.76.11 3.05.75.81 1.2 1.84 1.2 3.1 0 4.43-2.7 5.4-5.27 5.69.41.36.78 1.06.78 2.14v3.17c0 .31.2.67.8.56A11.5 11.5 0 0 0 23.5 12 11.5 11.5 0 0 0 12 .5Z"/></svg>
+                  Source Code
+                </a>
+                <a href="https://www.youtube.com/watch?v=waItX1pYJvQ" data-yt="waItX1pYJvQ" class="link link--video js-video">
+                  <svg viewBox="0 0 24 24" width="16" height="16" aria-hidden="true"><path fill="currentColor" d="M23.5 6.2a3 3 0 0 0-2.1-2.1C19.5 3.6 12 3.6 12 3.6s-7.5 0-9.4.5A3 3 0 0 0 .5 6.2 31 31 0 0 0 0 12a31 31 0 0 0 .5 5.8 3 3 0 0 0 2.1 2.1c1.9.5 9.4.5 9.4.5s7.5 0 9.4-.5a3 3 0 0 0 2.1-2.1A31 31 0 0 0 24 12a31 31 0 0 0-.5-5.8ZM9.6 15.6V8.4l6.2 3.6-6.2 3.6Z"/></svg>
+                  Watch Demo
+                </a>
+              </div>
+            </div>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============ ABOUT ============ -->
+    <section class="section section--alt" id="about">
+      <div class="container about">
+        <div class="about__text reveal">
+          <span class="section__kicker">About</span>
+          <h2 class="section__title">A production-first Voice AI Engineer</h2>
+          <p>
+            I'm Kamal — a Voice AI Engineer focused on one thing: shipping voice agents that actually
+            work when real customers call. Most demos break the moment there's background noise, an
+            accent, a CRM timeout, or an unexpected question. I build for that other 90%.
+          </p>
+          <p>
+            I come from a product engineering background, so I start with the business outcome — more
+            booked calls, faster response, higher conversion — and work backwards into the architecture.
+            Every agent I build is engineered for reliability with <strong>durable execution</strong>,
+            monitored end-to-end with <strong>full observability</strong>, and shipped through
+            <strong>automated CI/CD</strong> pipelines.
+          </p>
+          <ul class="about__creds">
+            <li>
+              <span class="about__creds-ic" aria-hidden="true">◆</span>
+              Trained under <strong>Kwindla Kramer's Voice AI Masterclass</strong> (founder of Pipecat)
+            </li>
+            <li>
+              <span class="about__creds-ic" aria-hidden="true">◆</span>
+              Open-source contributor to <strong>LiveKit, PydanticAI &amp; ACI.dev</strong>
+            </li>
+            <li>
+              <span class="about__creds-ic" aria-hidden="true">◆</span>
+              Builds with handoff and documentation in mind — no vendor lock-in to me
+            </li>
+          </ul>
+          <a href="#contact" class="btn btn--primary">Let's build your agent</a>
+        </div>
+
+        <aside class="about__card reveal" aria-label="How I work">
+          <h3 class="about__card-title">How I work</h3>
+          <ol class="about__steps">
+            <li>
+              <span class="about__step-n">01</span>
+              <div>
+                <h4>Understand the outcome</h4>
+                <p>We define what a win looks like — response time, conversion, calls handled.</p>
+              </div>
+            </li>
+            <li>
+              <span class="about__step-n">02</span>
+              <div>
+                <h4>Architect for reliability</h4>
+                <p>Telephony, real-time voice, orchestration and integrations designed to not break.</p>
+              </div>
+            </li>
+            <li>
+              <span class="about__step-n">03</span>
+              <div>
+                <h4>Build, measure, iterate</h4>
+                <p>Ship fast, observe real calls with Logfire/Langfuse, and tune from real data.</p>
+              </div>
+            </li>
+            <li>
+              <span class="about__step-n">04</span>
+              <div>
+                <h4>Deploy &amp; hand off</h4>
+                <p>Dockerized, CI/CD to the cloud, fully documented so your team stays in control.</p>
+              </div>
+            </li>
+          </ol>
+        </aside>
+      </div>
+    </section>
+
+    <!-- ============ CAPABILITIES ============ -->
+    <section class="section" id="capabilities">
+      <div class="container">
+        <header class="section__head reveal">
+          <span class="section__kicker">Capabilities</span>
+          <h2 class="section__title">What I build</h2>
+          <p class="section__lead">End-to-end voice systems that don't just talk — they take action.</p>
+        </header>
+
+        <div class="cap-grid">
+          <div class="cap reveal">
+            <div class="cap__ic" aria-hidden="true">
+              <svg viewBox="0 0 24 24" width="24" height="24"><path fill="currentColor" d="M6.6 10.8c1.4 2.8 3.8 5.1 6.6 6.6l2.2-2.2c.3-.3.7-.4 1-.2 1.1.4 2.3.6 3.6.6.6 0 1 .4 1 1V20c0 .6-.4 1-1 1C10.6 21 3 13.4 3 4c0-.6.4-1 1-1h3.4c.6 0 1 .4 1 1 0 1.2.2 2.4.6 3.6.1.4 0 .8-.3 1l-2.1 2.2Z"/></svg>
+            </div>
+            <h3>Inbound &amp; Outbound Agents</h3>
+            <p>AI receptionists and callers that answer, qualify, route, and follow up — over phone and WhatsApp.</p>
+          </div>
+          <div class="cap reveal">
+            <div class="cap__ic" aria-hidden="true">
+              <svg viewBox="0 0 24 24" width="24" height="24"><path fill="currentColor" d="M13 2 3 14h7l-1 8 10-12h-7l1-8Z"/></svg>
+            </div>
+            <h3>Speed-to-Lead Systems</h3>
+            <p>Call new leads in under 60 seconds — from Facebook Ads, Google Forms, or your own funnel.</p>
+          </div>
+          <div class="cap reveal">
+            <div class="cap__ic" aria-hidden="true">
+              <svg viewBox="0 0 24 24" width="24" height="24"><path fill="currentColor" d="M7 3h10a2 2 0 0 1 2 2v14l-4-3-3 2-3-2-4 3V5a2 2 0 0 1 2-2Zm2 5h6v2H9V8Zm0 4h6v2H9v-2Z"/></svg>
+            </div>
+            <h3>Booking &amp; Payments</h3>
+            <p>Real-time calendar booking and payment collection handled inside the conversation.</p>
+          </div>
+          <div class="cap reveal">
+            <div class="cap__ic" aria-hidden="true">
+              <svg viewBox="0 0 24 24" width="24" height="24"><path fill="currentColor" d="M4 4h16v4H4V4Zm0 6h16v4H4v-4Zm0 6h10v4H4v-4Z"/></svg>
+            </div>
+            <h3>CRM &amp; Workflow Integration</h3>
+            <p>Structured call analysis synced to CRMs, Sheets and pipelines — every call captured.</p>
+          </div>
+          <div class="cap reveal">
+            <div class="cap__ic" aria-hidden="true">
+              <svg viewBox="0 0 24 24" width="24" height="24"><path fill="currentColor" d="M12 2 4 6v6c0 5 3.4 8.7 8 10 4.6-1.3 8-5 8-10V6l-8-4Zm-1 13-3-3 1.4-1.4L11 12.2l4.6-4.6L17 9l-6 6Z"/></svg>
+            </div>
+            <h3>Durable &amp; Reliable</h3>
+            <p>Durable execution with Inngest so a dropped API call never drops the customer.</p>
+          </div>
+          <div class="cap reveal">
+            <div class="cap__ic" aria-hidden="true">
+              <svg viewBox="0 0 24 24" width="24" height="24"><path fill="currentColor" d="M3 3h18v12H3V3Zm2 2v8h14V5H5Zm3 14h8v2H8v-2Z"/></svg>
+            </div>
+            <h3>Observability &amp; Deployment</h3>
+            <p>Monitored with Logfire/Langfuse and deployed to Cloud Run/AWS via automated pipelines.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============ TECH STACK ============ -->
+    <section class="section section--alt" id="stack">
+      <div class="container">
+        <header class="section__head reveal">
+          <span class="section__kicker">Toolbox</span>
+          <h2 class="section__title">Tech stack</h2>
+          <p class="section__lead">The production stack I use to design, build, deploy and monitor voice agents.</p>
+        </header>
+
+        <div class="stack-grid">
+          <div class="stack reveal">
+            <h3 class="stack__cat">Voice AI</h3>
+            <div class="tags tags--lg">
+              <span>LiveKit</span><span>VAPI</span><span>Real-time Voice AI</span><span>Eleven Labs</span>
+            </div>
+          </div>
+          <div class="stack reveal">
+            <h3 class="stack__cat">Telephony &amp; Channels</h3>
+            <div class="tags tags--lg">
+              <span>Twilio</span><span>WhatsApp Calling API</span><span>SIP / PSTN</span>
+            </div>
+          </div>
+          <div class="stack reveal">
+            <h3 class="stack__cat">Agents &amp; Orchestration</h3>
+            <div class="tags tags--lg">
+              <span>PydanticAI</span><span>Inngest (Durable Execution)</span><span>MCP</span><span>AI Automations</span>
+            </div>
+          </div>
+          <div class="stack reveal">
+            <h3 class="stack__cat">Backend &amp; Integrations</h3>
+            <div class="tags tags--lg">
+              <span>Python</span><span>FastAPI</span><span>Webhooks</span><span>REST APIs</span><span>Google Apps Script</span><span>Zapier</span>
+            </div>
+          </div>
+          <div class="stack reveal">
+            <h3 class="stack__cat">Observability</h3>
+            <div class="tags tags--lg">
+              <span>Logfire</span><span>Langfuse</span><span>Call Analytics</span>
+            </div>
+          </div>
+          <div class="stack reveal">
+            <h3 class="stack__cat">Deployment</h3>
+            <div class="tags tags--lg">
+              <span>Docker</span><span>GitHub Actions</span><span>GCP</span><span>AWS</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============ CONTACT / CTA ============ -->
+    <section class="section cta" id="contact">
+      <div class="container cta__inner reveal">
+        <span class="section__kicker">Let's talk</span>
+        <h2 class="cta__title">A Voice AI Agent For Your Use Case</h2>
+        <p class="cta__lead">
+          Tell me what your use case is and what you want your Voice AI Agent to do. I will create a plan on how we can achieve success.
+        </p>
+
+        <div class="cta__actions">
+          <!-- TODO: replace with your real email -->
+          <a href="mailto:Kamalmohapy@gmail.com" class="btn btn--primary btn--lg">Email me</a>
+          <!-- <a href="https://www.loom.com/share/45499bc8747d4612a08d2fccf5a30a7c" target="_blank" rel="noopener" class="btn btn--ghost btn--lg">Watch my intro</a> -->
+        </div>
+
+        <!-- <div class="cta__socials">
+          <a href="https://github.com/Kamal-Moha" target="_blank" rel="noopener" aria-label="GitHub">
+            <svg viewBox="0 0 24 24" width="20" height="20" aria-hidden="true"><path fill="currentColor" d="M12 .5A11.5 11.5 0 0 0 .5 12a11.5 11.5 0 0 0 7.86 10.92c.58.1.79-.25.79-.56v-2c-3.2.7-3.88-1.36-3.88-1.36-.53-1.34-1.29-1.7-1.29-1.7-1.05-.72.08-.7.08-.7 1.16.08 1.77 1.2 1.77 1.2 1.03 1.77 2.7 1.26 3.36.96.1-.75.4-1.26.73-1.55-2.56-.29-5.25-1.28-5.25-5.7 0-1.26.45-2.29 1.2-3.1-.12-.29-.52-1.46.11-3.05 0 0 .97-.31 3.18 1.18a11 11 0 0 1 5.8 0c2.2-1.49 3.17-1.18 3.17-1.18.63 1.59.23 2.76.11 3.05.75.81 1.2 1.84 1.2 3.1 0 4.43-2.7 5.4-5.27 5.69.41.36.78 1.06.78 2.14v3.17c0 .31.2.67.8.56A11.5 11.5 0 0 0 23.5 12 11.5 11.5 0 0 0 12 .5Z"/></svg>
+            <span>github.com/Kamal-Moha</span>
+          </a> -->
+
+          <!-- TODO: replace with your real LinkedIn / Upwork URLs -->
+          <a href="https://www.linkedin.com/in/kamal-muhamed-b48185250/" target="_blank" rel="noopener" aria-label="LinkedIn">
+            <svg viewBox="0 0 24 24" width="20" height="20" aria-hidden="true"><path fill="currentColor" d="M4.98 3.5A2.5 2.5 0 1 1 0 3.5a2.5 2.5 0 0 1 4.98 0ZM.5 8h4V24h-4V8Zm7 0h3.8v2.2h.06c.53-1 1.83-2.2 3.76-2.2 4 0 4.74 2.64 4.74 6.08V24h-4v-7.1c0-1.7-.03-3.88-2.37-3.88-2.37 0-2.73 1.85-2.73 3.76V24h-4V8Z"/></svg>
+            <span>LinkedIn</span>
+          </a>
+          <!-- <a href="#" target="_blank" rel="noopener" aria-label="Upwork">
+            <svg viewBox="0 0 24 24" width="20" height="20" aria-hidden="true"><path fill="currentColor" d="M18.6 8.2c-1.9 0-3.4 1.2-4 3.2-.9-1.4-1.6-3-2-4.4H8.9v5.3c0 1.5-1 2.6-2.4 2.6-1.5 0-2.5-1.1-2.5-2.6L4 7H1.3v5.3c0 1.5.5 2.9 1.4 3.8.9.9 2.1 1.4 3.5 1.3 2.8 0 4.8-2.2 4.8-5.1v-.5c.4.8.9 1.6 1.5 2.4l-1.3 6h2.8l.9-4.4c.8.5 1.7.8 2.8.8 2.6 0 4.7-2.2 4.7-5 0-2.8-2.1-4.9-4.8-4.9Zm0 7.2c-.9 0-1.7-.4-2.4-1l.2-.9v-.1c.2-1 .8-2.6 2.2-2.6 1.1 0 2 .9 2 2.3 0 1.3-.9 2.3-2 2.3Z"/></svg>
+            <span>Upwork</span>
+          </a> -->
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <!-- ============ FOOTER ============ -->
+  <footer class="footer">
+    <div class="container footer__inner">
+      <span class="footer__brand">Kamal Muhamed Ahmed — Voice AI Engineer</span>
+      <span class="footer__copy">&copy; <span id="year"></span> · Built &amp; shipped by Kamal</span>
+    </div>
+  </footer>
+
+  <script src="js/main.js?v=2"></script>
+</body>
+</html>

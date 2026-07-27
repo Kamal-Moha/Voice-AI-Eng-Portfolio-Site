@@ -1,0 +1,17 @@
+# Version control
+.git
+.gitignore
+
+# Docs / meta
+README.md
+*.md
+
+# OS / editor cruft
+.DS_Store
+Thumbs.db
+.vscode
+.idea
+
+# Node / build artifacts (not used, but guarded)
+node_modules
+npm-debug.log

@@ -1,0 +1,42 @@
+# nginx site config — ${PORT} is substituted at container start by the
+# official nginx image's envsubst entrypoint (Cloud Run sets PORT=8080).
+server {
+    listen       ${PORT};
+    listen       [::]:${PORT};
+    server_name  _;
+
+    root   /usr/share/nginx/html;
+    index  index.html;
+
+    # gzip compression
+    gzip              on;
+    gzip_vary         on;
+    gzip_min_length   256;
+    gzip_proxied      any;
+    gzip_types        text/plain text/css application/javascript application/json
+                      image/svg+xml application/xml font/woff2;
+
+    # Security headers
+    add_header X-Content-Type-Options nosniff always;
+    add_header X-Frame-Options SAMEORIGIN always;
+    add_header Referrer-Policy strict-origin-when-cross-origin always;
+
+    # Cache static assets aggressively
+    location ~* \.(?:css|js|svg|ico|jpg|jpeg|png|gif|webp|woff2?)$ {
+        expires 30d;
+        add_header Cache-Control "public, max-age=2592000, immutable";
+        try_files $uri =404;
+    }
+
+    # SPA-style fallback (single page site)
+    location / {
+        try_files $uri $uri/ /index.html;
+    }
+
+    # Lightweight health check endpoint for Cloud Run
+    location = /healthz {
+        access_log off;
+        add_header Content-Type text/plain;
+        return 200 "ok\n";
+    }
+}
