@@ -4,3 +4,6 @@ Thumbs.db
 .idea/
 node_modules/
 *.log
+
+# Local Claude Code skills (not shared)
+.claude/skills/

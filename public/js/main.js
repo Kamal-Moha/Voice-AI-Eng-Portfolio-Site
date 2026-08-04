@@ -8,6 +8,20 @@
   var yearEl = document.getElementById("year");
   if (yearEl) yearEl.textContent = new Date().getFullYear();
 
+  /* ---- Book a demo: one link, applied everywhere ----
+     The real scheduling URL lives in <body data-book="...">. Point every
+     "Book a demo" button (.js-book) at it and open in a new tab. Until the
+     placeholder is replaced, the buttons fall back to scrolling to #book. */
+  var bookUrl = (document.body.getAttribute("data-book") || "").trim();
+  var bookReady = bookUrl && bookUrl.indexOf("REPLACE-ME") === -1;
+  if (bookReady) {
+    document.querySelectorAll(".js-book").forEach(function (el) {
+      el.setAttribute("href", bookUrl);
+      el.setAttribute("target", "_blank");
+      el.setAttribute("rel", "noopener");
+    });
+  }
+
   /* ---- Navbar background on scroll ---- */
   var nav = document.getElementById("nav");
   function onScroll() {
