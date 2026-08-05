@@ -7,3 +7,4 @@ node_modules/
 
 # Local Claude Code skills (not shared)
 .claude/skills/
+.claude/**

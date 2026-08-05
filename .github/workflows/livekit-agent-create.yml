@@ -23,7 +23,7 @@ jobs:
           WORKING_DIRECTORY: ${{ env.LIVEKIT_AGENT_DIRECTORY }}
 
       - name: Create Pull Request # create a pull request to add the newly created livekit.toml
-        uses: peter-evans/create-pull-request@v7
+        uses: peter-evans/create-pull-request@v8
         with:
           add-paths: |
             ${{ env.LIVEKIT_AGENT_DIRECTORY }}/livekit.toml
@@ -41,7 +41,7 @@ jobs:
         with:
           ref: cloud-agent-${{ github.run_id }}
       - name: Status Check # block until the agent is in the 'Running' state
-        uses: livekit/deploy-action@v2.12.1
+        uses: livekit/deploy-action@v2
         env:
           LIVEKIT_URL: ${{ secrets.LIVEKIT_URL }}
           LIVEKIT_API_KEY: ${{ secrets.LIVEKIT_API_KEY }}
