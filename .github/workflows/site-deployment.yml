@@ -6,6 +6,7 @@ on:
       - main
     paths:
       - 'website/**'
+      - .github/workflows/site-deployment.yml
       - '!website/README.md'
       - '!website/**/*.md'
 
