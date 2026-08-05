@@ -54,7 +54,7 @@ jobs:
         run: |-
           DOCKER_TAG="${{ env.REGION }}-docker.pkg.dev/${{ secrets.GCP_PROJECT_ID }}/${{ env.ARTIFACT_REPO }}/cicd-app-img"
           echo "${DOCKER_TAG}"
-          cd "${env.WORKING_DIRECTORY}"
+          cd "${{ env.WORKING_DIRECTORY }}"
           docker build --tag "${DOCKER_TAG}" .
           docker push "${DOCKER_TAG}"
       - name: 'Deploy to Cloud Run'
