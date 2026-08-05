@@ -53,8 +53,9 @@ jobs:
       - name: 'Build and Push Container'
         run: |-
           DOCKER_TAG="${{ env.REGION }}-docker.pkg.dev/${{ secrets.GCP_PROJECT_ID }}/${{ env.ARTIFACT_REPO }}/cicd-app-img"
+          DIRECTORY="${{ env.WORKING_DIRECTORY }}"
           echo "${DOCKER_TAG}"
-          cd "${{ env.WORKING_DIRECTORY }}"
+          cd "${DIRECTORY}"
           docker build --tag "${DOCKER_TAG}" .
           docker push "${DOCKER_TAG}"
       - name: 'Deploy to Cloud Run'
