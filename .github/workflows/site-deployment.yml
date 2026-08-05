@@ -1,9 +1,13 @@
-name: Build and Deploy inngest server to Cloud Run
+name: Build and Deploy the website server to Cloud Run
 
 on:
   push:
     branches:
       - main
+    paths:
+      - 'website/**'
+      - '!website/README.md'
+      - '!website/**/*.md'
 
 env:
   ARTIFACT_REPO: 'portfolio-site'

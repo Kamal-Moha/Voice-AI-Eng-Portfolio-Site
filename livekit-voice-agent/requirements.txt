@@ -1,0 +1,10 @@
+livekit-agents[aws, google, mcp]~=1.5
+livekit-plugins-noise-cancellation~=0.2
+livekit-plugins-ai-coustics
+livekit-plugins-aws[realtime]
+python-dotenv
+inngest
+boto3
+pyyaml
+inngest
+pydantic-ai

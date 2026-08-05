@@ -1,0 +1,17 @@
+[project]
+name = "livekit-voice-agent"
+version = "0.1.0"
+description = "Add your description here"
+readme = "README.md"
+requires-python = ">=3.12"
+dependencies = [
+    "boto3>=1.43.56",
+    "inngest>=0.5.19",
+    "livekit-agents[aws,google,mcp]~=1.5",
+    "livekit-plugins-ai-coustics>=0.3.0",
+    "livekit-plugins-aws[realtime]>=1.6.8",
+    "livekit-plugins-noise-cancellation~=0.2",
+    "pydantic-ai>=2.24.0",
+    "python-dotenv>=1.2.2",
+    "pyyaml>=6.0.3",
+]

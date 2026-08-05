@@ -1,0 +1,37 @@
+name: Deploy livekit-voice-agent on changes
+
+env:
+  LIVEKIT_AGENT_DIRECTORY: 'livekit-voice-agent'
+
+on:
+  push:
+    branches:
+      - main
+    paths:
+      - 'livekit-voice-agent/**'
+      - '.github/workflows/livekit-agent-deploy-automated.yml'
+      - '!livekit-voice-agent/livekit.toml'
+      - '!livekit-voice-agent/README.md'
+      - '!livekit-voice-agent/**/*.md'
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    environment: livekit-voice-agent
+    concurrency:
+      group: ${{ github.workflow }}-livekit-voice-agent
+      cancel-in-progress: true
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Deploy LiveKit Cloud Agent
+        uses: livekit/deploy-action@v2.12.1
+        env:
+          LIVEKIT_URL: ${{ secrets.LIVEKIT_URL }}
+          LIVEKIT_API_KEY: ${{ secrets.LIVEKIT_API_KEY }}
+          LIVEKIT_API_SECRET: ${{ secrets.LIVEKIT_API_SECRET }}
+          SECRET_LIST: ${{ secrets.SECRET_LIST }}
+        with:
+          OPERATION: deploy
+          WORKING_DIRECTORY: ${{ env.LIVEKIT_AGENT_DIRECTORY }}
