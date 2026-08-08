@@ -1,165 +1,145 @@
 /* ============================================================
-   Portfolio interactivity
+   DaLab AI — Staging Landing Page interactions (vanilla JS)
+   - Mobile nav toggle
+   - Scroll-reveal (IntersectionObserver on .reveal)
+   - Animated stat counters (data-count / data-suffix)
+   - Missed-call money calculator
+   - CTA wiring (data-book -> booking URL)
+   - Footer year
    ============================================================ */
 (function () {
   "use strict";
 
-  /* ---- Current year ---- */
+  /* ---------- Footer year ---------- */
   var yearEl = document.getElementById("year");
   if (yearEl) yearEl.textContent = new Date().getFullYear();
 
-  /* ---- Book a demo: one link, applied everywhere ----
-     The real scheduling URL lives in <body data-book="...">. Point every
-     "Book a demo" button (.js-book) at it and open in a new tab. Until the
-     placeholder is replaced, the buttons fall back to scrolling to #book. */
-  var bookUrl = (document.body.getAttribute("data-book") || "").trim();
-  var bookReady = bookUrl && bookUrl.indexOf("REPLACE-ME") === -1;
-  if (bookReady) {
-    document.querySelectorAll(".js-book").forEach(function (el) {
+  /* ---------- CTA wiring ---------- */
+  // The booking URL lives once on <body data-book="...">. Every .js-book
+  // element points to it, so you change the link in ONE place (index.html).
+  var bookUrl = document.body.getAttribute("data-book") || "#";
+  document.querySelectorAll(".js-book").forEach(function (el) {
+    if (el.tagName === "A") {
       el.setAttribute("href", bookUrl);
       el.setAttribute("target", "_blank");
       el.setAttribute("rel", "noopener");
-    });
-  }
+    } else {
+      el.addEventListener("click", function () {
+        window.open(bookUrl, "_blank", "noopener");
+      });
+    }
+  });
 
-  /* ---- Navbar background on scroll ---- */
-  var nav = document.getElementById("nav");
-  function onScroll() {
-    if (window.scrollY > 20) nav.classList.add("scrolled");
-    else nav.classList.remove("scrolled");
-  }
-  window.addEventListener("scroll", onScroll, { passive: true });
-  onScroll();
-
-  /* ---- Mobile nav toggle ---- */
-  var toggle = document.getElementById("navToggle");
-  var links = document.getElementById("navLinks");
+  /* ---------- Mobile nav ---------- */
+  var toggle = document.querySelector(".nav__toggle");
+  var links = document.querySelector(".nav__links");
   if (toggle && links) {
     toggle.addEventListener("click", function () {
-      var open = links.classList.toggle("open");
-      toggle.classList.toggle("open", open);
-      toggle.setAttribute("aria-expanded", String(open));
+      var open = links.classList.toggle("is-open");
+      toggle.classList.toggle("is-open", open);
+      toggle.setAttribute("aria-expanded", open ? "true" : "false");
     });
-    // Close menu when a link is clicked
+    // Close after tapping a link
     links.querySelectorAll("a").forEach(function (a) {
       a.addEventListener("click", function () {
-        links.classList.remove("open");
-        toggle.classList.remove("open");
-        toggle.setAttribute("aria-expanded", "false");
+        links.classList.remove("is-open");
+        toggle.classList.remove("is-open");
       });
     });
   }
 
-  /* ---- Scroll reveal ---- */
-  var revealEls = document.querySelectorAll(".reveal");
-  if ("IntersectionObserver" in window) {
-    var io = new IntersectionObserver(
-      function (entries) {
-        entries.forEach(function (entry) {
-          if (entry.isIntersecting) {
-            entry.target.classList.add("in");
-            io.unobserve(entry.target);
-          }
-        });
-      },
-      { threshold: 0.12, rootMargin: "0px 0px -40px 0px" }
-    );
-    revealEls.forEach(function (el) { io.observe(el); });
+  var reduceMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+
+  /* ---------- Scroll reveal ---------- */
+  var reveals = document.querySelectorAll(".reveal");
+  if (reduceMotion || !("IntersectionObserver" in window)) {
+    reveals.forEach(function (el) { el.classList.add("is-in"); });
   } else {
-    revealEls.forEach(function (el) { el.classList.add("in"); });
+    var revObs = new IntersectionObserver(function (entries) {
+      entries.forEach(function (entry) {
+        if (entry.isIntersecting) {
+          entry.target.classList.add("is-in");
+          revObs.unobserve(entry.target);
+        }
+      });
+    }, { threshold: 0.12, rootMargin: "0px 0px -8% 0px" });
+    reveals.forEach(function (el) { revObs.observe(el); });
   }
 
-  /* ---- Animated stat counters ---- */
+  /* ---------- Animated counters ---------- */
   function animateCount(el) {
-    var target = parseInt(el.getAttribute("data-count"), 10);
-    if (isNaN(target)) return;
-    var prefix = el.getAttribute("data-prefix") || "";
+    var target = parseFloat(el.getAttribute("data-count")) || 0;
     var suffix = el.getAttribute("data-suffix") || "";
-    // Decode HTML entities like &lt;
-    var tmp = document.createElement("textarea");
-    tmp.innerHTML = prefix; prefix = tmp.value;
-    var duration = 1400;
+    var prefix = el.getAttribute("data-prefix") || "";
+    var dur = 1400;
+    if (reduceMotion) { el.textContent = prefix + target + suffix; return; }
     var start = null;
     function step(ts) {
-      if (!start) start = ts;
-      var progress = Math.min((ts - start) / duration, 1);
-      var eased = 1 - Math.pow(1 - progress, 3); // easeOutCubic
-      el.textContent = prefix + Math.round(eased * target) + suffix;
-      if (progress < 1) requestAnimationFrame(step);
+      if (start === null) start = ts;
+      var p = Math.min((ts - start) / dur, 1);
+      var eased = 1 - Math.pow(1 - p, 3); // easeOutCubic
+      el.textContent = prefix + Math.round(target * eased) + suffix;
+      if (p < 1) requestAnimationFrame(step);
+      else el.textContent = prefix + target + suffix;
     }
     requestAnimationFrame(step);
   }
 
-  var statEls = document.querySelectorAll(".stat__num[data-count]");
-  if ("IntersectionObserver" in window) {
-    var statIO = new IntersectionObserver(
-      function (entries) {
-        entries.forEach(function (entry) {
-          if (entry.isIntersecting) {
-            animateCount(entry.target);
-            statIO.unobserve(entry.target);
-          }
-        });
-      },
-      { threshold: 0.6 }
-    );
-    statEls.forEach(function (el) { statIO.observe(el); });
-  }
-
-  /* ---- YouTube thumbnail fallback (maxres -> hq) ---- */
-  document.querySelectorAll(".project__thumb").forEach(function (img) {
-    img.addEventListener("error", function handler() {
-      var fb = img.getAttribute("data-fallback");
-      if (fb && img.src !== fb) {
-        img.src = fb;
-      } else {
-        img.removeEventListener("error", handler);
-      }
-    });
-  });
-
-  /* ---- Inline YouTube embed (video plays inside the card, on-site) ---- */
-  function playInline(mediaEl, videoId) {
-    if (!mediaEl || !videoId || mediaEl.classList.contains("is-playing")) return;
-
-    var iframe = document.createElement("iframe");
-    iframe.setAttribute(
-      "src",
-      "https://www.youtube.com/embed/" +
-        encodeURIComponent(videoId) +
-        "?autoplay=1&rel=0&modestbranding=1&playsinline=1"
-    );
-    iframe.setAttribute("title", "Project demo video");
-    iframe.setAttribute(
-      "allow",
-      "accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
-    );
-    iframe.setAttribute("allowfullscreen", "");
-
-    mediaEl.classList.add("is-playing");
-    mediaEl.appendChild(iframe);
-  }
-
-  document.querySelectorAll(".js-video").forEach(function (el) {
-    el.addEventListener("click", function (e) {
-      var id = el.getAttribute("data-yt");
-      if (!id) return; // no video id -> allow default (fallback link)
-      e.preventDefault();
-
-      // The media area to embed into: the element itself if it's the thumbnail,
-      // otherwise the .project__media within the same card (e.g. "Watch Demo" link).
-      var media = el.classList.contains("project__media")
-        ? el
-        : (el.closest(".project") && el.closest(".project").querySelector(".project__media"));
-
-      if (media) {
-        playInline(media, id);
-        if (!el.classList.contains("project__media")) {
-          media.scrollIntoView({ behavior: "smooth", block: "center" });
+  var counters = document.querySelectorAll("[data-count]");
+  if (!("IntersectionObserver" in window)) {
+    counters.forEach(animateCount);
+  } else {
+    var cObs = new IntersectionObserver(function (entries) {
+      entries.forEach(function (entry) {
+        if (entry.isIntersecting) {
+          animateCount(entry.target);
+          cObs.unobserve(entry.target);
         }
-      } else if (el.href) {
-        window.location.href = el.href; // ultimate fallback
-      }
-    });
-  });
+      });
+    }, { threshold: 0.5 });
+    counters.forEach(function (el) { cObs.observe(el); });
+  }
+
+  /* ---------- Missed-call money calculator ---------- */
+  var callsRange = document.getElementById("callsRange");
+  var jobRange = document.getElementById("jobRange");
+  var callsVal = document.getElementById("callsVal");
+  var jobVal = document.getElementById("jobVal");
+  var lossMonth = document.getElementById("lossMonth");
+  var lossYear = document.getElementById("lossYear");
+
+  // Share of missed callers who book with a competitor instead of waiting.
+  var BOOK_RATE = 0.6;
+
+  function money(n) {
+    return "$" + Math.round(n).toLocaleString("en-US");
+  }
+
+  function paintRange(input) {
+    var min = parseFloat(input.min) || 0;
+    var max = parseFloat(input.max) || 100;
+    var pct = ((parseFloat(input.value) - min) / (max - min)) * 100;
+    input.style.setProperty("--pct", pct + "%");
+  }
+
+  function recalc() {
+    if (!callsRange || !jobRange) return;
+    var calls = parseFloat(callsRange.value);   // missed calls per week
+    var job = parseFloat(jobRange.value);        // avg job value
+    if (callsVal) callsVal.textContent = calls;
+    if (jobVal) jobVal.textContent = money(job);
+
+    var perMonth = calls * 4.33 * BOOK_RATE * job; // lost revenue / month
+    if (lossMonth) lossMonth.textContent = money(perMonth);
+    if (lossYear) lossYear.textContent = money(perMonth * 12);
+
+    paintRange(callsRange);
+    paintRange(jobRange);
+  }
+
+  if (callsRange && jobRange) {
+    callsRange.addEventListener("input", recalc);
+    jobRange.addEventListener("input", recalc);
+    recalc();
+  }
 })();
