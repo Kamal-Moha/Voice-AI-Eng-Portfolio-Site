@@ -1,0 +1,86 @@
+name: Build and Deploy the token server to Cloud Run
+
+on:
+  push:
+    branches:
+      - main
+    paths:
+      - 'token-server/**'
+      - .github/workflows/token-server-deployment.yml
+      - '!token-server/README.md'
+      - '!token-server/**/*.md'
+
+env:
+  ARTIFACT_REPO: 'portfolio-site'   # reuse the existing Artifact Registry repo
+  REGION: 'us-east1'
+  SERVICE: 'token-server'
+  PORT: 8080
+  WORKING_DIRECTORY: 'token-server'
+
+jobs:
+  deploy:
+    runs-on: 'ubuntu-latest'
+
+    # The LiveKit secrets live under this GitHub environment (same as the agent
+    # workflow). Declaring it here makes LIVEKIT_* resolve; repo-level GCP
+    # secrets remain available regardless.
+    environment: livekit-voice-agent
+
+    permissions:
+      contents: 'read'
+      id-token: 'write'
+
+    steps:
+      - name: 'Checkout'
+        uses: 'actions/checkout@v4'
+
+      # Configure Workload Identity Federation and generate an access token.
+      - id: 'auth'
+        name: 'Authenticate to Google Cloud'
+        uses: 'google-github-actions/auth@v1'
+        with:
+          token_format: access_token
+          workload_identity_provider: ${{ secrets.GCP_WIF_PROVIDER }}
+          service_account: ${{ secrets.GCP_SERVICE_ACCOUNT }}
+
+      - name: 'Docker Auth'
+        uses: 'docker/login-action@v3'
+        with:
+          registry: '${{ env.REGION }}-docker.pkg.dev'
+          username: 'oauth2accesstoken'
+          password: '${{ steps.auth.outputs.access_token }}'
+
+      - name: 'Build and Push Container'
+        run: |-
+          DOCKER_TAG="${{ env.REGION }}-docker.pkg.dev/${{ secrets.GCP_PROJECT_ID }}/${{ env.ARTIFACT_REPO }}/token-server-img"
+          echo "${DOCKER_TAG}"
+          cd token-server
+          docker build --tag "${DOCKER_TAG}" .
+          docker push "${DOCKER_TAG}"
+
+      - name: 'Deploy to Cloud Run'
+        id: deploy
+        uses: 'google-github-actions/deploy-cloudrun@v2'
+        with:
+          service: '${{ env.SERVICE }}'
+          region: '${{ env.REGION }}'
+          image: '${{ env.REGION }}-docker.pkg.dev/${{ secrets.GCP_PROJECT_ID }}/${{ env.ARTIFACT_REPO }}/token-server-img'
+          flags:
+            '--allow-unauthenticated --port=${{ env.PORT }} --service-account=${{ secrets.GCP_SERVICE_ACCOUNT }}'
+          # Runtime configuration. Secrets come from the GH environment; the rest
+          # are plain config. ALLOWED_ORIGINS must list the browser origins that
+          # are permitted to call /getToken (the live site).
+          env_vars: |-
+            LIVEKIT_URL=${{ secrets.LIVEKIT_URL }}
+            LIVEKIT_API_KEY=${{ secrets.LIVEKIT_API_KEY }}
+            LIVEKIT_API_SECRET=${{ secrets.LIVEKIT_API_SECRET }}
+            AGENT_NAME=web-agent
+            ALLOWED_ORIGINS=https://dalabai.com,https://www.dalabai.com
+            TOKEN_TTL_SECONDS=900
+
+      # The deployed URL — copy this into website/public/index.html's
+      # data-token-endpoint (append /getToken).
+      - name: 'Show output'
+        run: |2-
+
+          echo "Token server URL: ${{ steps.deploy.outputs.url }}"
