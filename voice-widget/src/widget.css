@@ -1,0 +1,421 @@
+/* DaLab AI voice widget — self-contained styles.
+   All rules are namespaced under .dalab-vw so the island never leaks into the
+   host page. The host passes the brand colour via the --dalab-accent variable
+   set on .dalab-vw (see VoiceWidget). */
+
+.dalab-vw {
+  --dalab-accent: #002cf2;
+  --dalab-bg: #0d0f17;
+  --dalab-surface: #161926;
+  --dalab-text: #eef0f6;
+  --dalab-muted: #9aa1b4;
+  --dalab-radius: 16px;
+  --dalab-shadow: 0 12px 40px rgba(0, 0, 0, 0.45);
+
+  position: fixed;
+  right: 20px;
+  bottom: 20px;
+  z-index: 2147483000; /* above almost everything */
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  font-family: system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+  color: var(--dalab-text);
+}
+
+/* ------------------------------ launcher ------------------------------ */
+
+.dalab-vw__launcher {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  gap: 9px;
+  height: 56px;
+  padding: 0 20px 0 17px;
+  border: none;
+  border-radius: 999px;
+  background: var(--dalab-accent);
+  color: #fff;
+  font-family: inherit;
+  font-size: 15px;
+  font-weight: 600;
+  cursor: pointer;
+  box-shadow: var(--dalab-shadow);
+  transition: transform 0.15s ease, filter 0.15s ease;
+}
+
+/* Resting state (panel closed, no call): a gentle breathing halo so the
+   launcher catches the eye in peripheral vision without shouting. */
+.dalab-vw__launcher[data-open='false'][data-active='false'] {
+  animation: dalab-breathe 3.2s ease-in-out infinite;
+}
+
+@keyframes dalab-breathe {
+  0%   { box-shadow: var(--dalab-shadow), 0 0 0 0 color-mix(in srgb, var(--dalab-accent) 45%, transparent); }
+  70%  { box-shadow: var(--dalab-shadow), 0 0 0 14px color-mix(in srgb, var(--dalab-accent) 0%, transparent); }
+  100% { box-shadow: var(--dalab-shadow), 0 0 0 0 color-mix(in srgb, var(--dalab-accent) 0%, transparent); }
+}
+
+/* When the panel is open the launcher collapses to a round minimise button. */
+.dalab-vw__launcher[data-open='true'] {
+  width: 56px;
+  padding: 0;
+  justify-content: center;
+  border-radius: 50%;
+}
+
+.dalab-vw__launcher:hover {
+  transform: translateY(-2px);
+  filter: brightness(1.06);
+}
+
+.dalab-vw__launcher:focus-visible {
+  outline: 3px solid color-mix(in srgb, var(--dalab-accent) 60%, white);
+  outline-offset: 3px;
+}
+
+.dalab-vw__launcher-label {
+  white-space: nowrap;
+  letter-spacing: 0.01em;
+}
+
+/* Live indicator when a call is running but the panel is minimised. */
+.dalab-vw__launcher[data-open='true'][data-active='true']::after {
+  content: '';
+  position: absolute;
+  top: 4px;
+  right: 4px;
+  width: 12px;
+  height: 12px;
+  border-radius: 50%;
+  background: #1ecb6b;
+  border: 2px solid var(--dalab-bg);
+}
+
+/* --------------------------- sound-wave ------------------------------- */
+
+.dalab-vw__wave {
+  display: inline-flex;
+  align-items: center;
+  gap: 3px;
+  height: 20px;
+}
+
+.dalab-vw__wave > span {
+  display: block;
+  width: 3px;
+  height: 100%;
+  border-radius: 3px;
+  background: currentColor;
+  transform: scaleY(0.4);
+  transform-origin: center;
+  animation: dalab-wave 1.1s ease-in-out infinite;
+}
+
+.dalab-vw__wave > span:nth-child(1) { animation-delay: 0s; }
+.dalab-vw__wave > span:nth-child(2) { animation-delay: 0.15s; }
+.dalab-vw__wave > span:nth-child(3) { animation-delay: 0.3s; }
+.dalab-vw__wave > span:nth-child(4) { animation-delay: 0.45s; }
+
+@keyframes dalab-wave {
+  0%, 100% { transform: scaleY(0.35); opacity: 0.75; }
+  50%      { transform: scaleY(1);    opacity: 1; }
+}
+
+/* ------------------------------ nudge -------------------------------- */
+
+.dalab-vw__nudge {
+  position: absolute;
+  right: 0;
+  bottom: 72px;
+  width: 250px;
+  padding: 14px 34px 14px 15px;
+  background: var(--dalab-bg);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: 14px;
+  box-shadow: var(--dalab-shadow);
+  transform-origin: bottom right;
+  animation: dalab-nudge-in 0.4s cubic-bezier(0.2, 0.9, 0.3, 1.25) both;
+}
+
+/* little tail pointing down toward the launcher */
+.dalab-vw__nudge::after {
+  content: '';
+  position: absolute;
+  right: 26px;
+  bottom: -7px;
+  width: 13px;
+  height: 13px;
+  background: var(--dalab-bg);
+  border-right: 1px solid rgba(255, 255, 255, 0.08);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+  transform: rotate(45deg);
+}
+
+.dalab-vw__nudge-text {
+  margin: 0;
+  font-size: 13.5px;
+  line-height: 1.5;
+  color: var(--dalab-text);
+}
+
+.dalab-vw__nudge-text strong {
+  color: color-mix(in srgb, var(--dalab-accent) 45%, white);
+  font-weight: 700;
+}
+
+.dalab-vw__nudge-close {
+  position: absolute;
+  top: 8px;
+  right: 8px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 22px;
+  height: 22px;
+  border: none;
+  border-radius: 7px;
+  background: rgba(255, 255, 255, 0.08);
+  color: var(--dalab-muted);
+  cursor: pointer;
+}
+
+.dalab-vw__nudge-close:hover {
+  background: rgba(255, 255, 255, 0.16);
+  color: #fff;
+}
+
+@keyframes dalab-nudge-in {
+  from { opacity: 0; transform: translateY(10px) scale(0.9); }
+  to   { opacity: 1; transform: none; }
+}
+
+/* ------------------------------- panel -------------------------------- */
+
+.dalab-vw__panel {
+  width: 320px;
+  max-width: calc(100vw - 40px);
+  margin-bottom: 14px;
+  background: var(--dalab-bg);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: var(--dalab-radius);
+  box-shadow: var(--dalab-shadow);
+  overflow: hidden;
+  transform-origin: bottom right;
+  transition: opacity 0.18s ease, transform 0.18s ease;
+}
+
+.dalab-vw__panel.is-hidden {
+  opacity: 0;
+  transform: translateY(12px) scale(0.96);
+  pointer-events: none;
+  position: absolute;
+  right: 0;
+  bottom: 72px;
+}
+
+.dalab-vw__panel.is-open {
+  opacity: 1;
+  transform: none;
+}
+
+.dalab-vw__header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 14px 16px;
+  background: linear-gradient(135deg, var(--dalab-accent), color-mix(in srgb, var(--dalab-accent) 55%, #000));
+}
+
+.dalab-vw__title {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-weight: 600;
+  font-size: 15px;
+}
+
+.dalab-vw__dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.4);
+}
+
+.dalab-vw__dot[data-live='true'] {
+  background: #1ecb6b;
+  box-shadow: 0 0 0 0 rgba(30, 203, 107, 0.6);
+  animation: dalab-pulse 1.8s infinite;
+}
+
+@keyframes dalab-pulse {
+  0% { box-shadow: 0 0 0 0 rgba(30, 203, 107, 0.5); }
+  70% { box-shadow: 0 0 0 8px rgba(30, 203, 107, 0); }
+  100% { box-shadow: 0 0 0 0 rgba(30, 203, 107, 0); }
+}
+
+.dalab-vw__icon-btn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 30px;
+  height: 30px;
+  border: none;
+  border-radius: 8px;
+  background: rgba(255, 255, 255, 0.12);
+  color: #fff;
+  cursor: pointer;
+}
+
+.dalab-vw__icon-btn:hover {
+  background: rgba(255, 255, 255, 0.22);
+}
+
+.dalab-vw__body {
+  padding: 20px 18px 22px;
+}
+
+/* --------------------------- start screen ----------------------------- */
+
+.dalab-vw__start {
+  text-align: center;
+}
+
+.dalab-vw__lead {
+  margin: 0 0 18px;
+  font-size: 14px;
+  line-height: 1.5;
+  color: var(--dalab-muted);
+}
+
+.dalab-vw__primary {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  width: 100%;
+  justify-content: center;
+  padding: 12px 18px;
+  border: none;
+  border-radius: 12px;
+  background: var(--dalab-accent);
+  color: #fff;
+  font-size: 15px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: filter 0.15s ease;
+}
+
+.dalab-vw__primary:hover {
+  filter: brightness(1.08);
+}
+
+.dalab-vw__hint {
+  margin: 12px 0 0;
+  font-size: 12px;
+  color: var(--dalab-muted);
+}
+
+/* ----------------------------- session -------------------------------- */
+
+.dalab-vw__session {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 16px;
+}
+
+.dalab-vw__viz {
+  width: 100%;
+  height: 96px;
+  --lk-va-bar-gap: 8px;
+  --lk-va-bar-width: 10px;
+  --lk-fg: var(--dalab-accent);
+}
+
+/* BarVisualizer renders bars with these class names; give them our look. */
+.dalab-vw__viz .lk-audio-bar {
+  background: color-mix(in srgb, var(--dalab-accent) 35%, var(--dalab-surface));
+  border-radius: 6px;
+}
+
+.dalab-vw__viz .lk-audio-bar.lk-highlighted,
+.dalab-vw__viz .lk-audio-bar[data-lk-highlighted='true'] {
+  background: var(--dalab-accent);
+}
+
+.dalab-vw__state {
+  font-size: 13px;
+  color: var(--dalab-muted);
+  min-height: 18px;
+}
+
+.dalab-vw__state[data-state='failed'] {
+  color: #ff6b6b;
+}
+
+.dalab-vw__controls {
+  display: flex;
+  gap: 10px;
+  width: 100%;
+}
+
+.dalab-vw__ctrl {
+  flex: 1;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  padding: 11px 12px;
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  border-radius: 12px;
+  background: var(--dalab-surface);
+  color: var(--dalab-text);
+  font-size: 14px;
+  font-weight: 500;
+  cursor: pointer;
+  transition: background 0.15s ease;
+}
+
+.dalab-vw__ctrl:hover {
+  background: color-mix(in srgb, var(--dalab-surface) 70%, white);
+}
+
+.dalab-vw__ctrl--end {
+  background: #d0323b;
+  border-color: transparent;
+  color: #fff;
+}
+
+.dalab-vw__ctrl--end:hover {
+  background: #e23d47;
+}
+
+.dalab-vw__ctrl:disabled {
+  opacity: 0.6;
+  cursor: default;
+}
+
+@media (max-width: 480px) {
+  .dalab-vw {
+    right: 12px;
+    bottom: 12px;
+  }
+
+  .dalab-vw__nudge {
+    width: 220px;
+  }
+}
+
+/* Respect visitors who ask the OS to reduce motion: no breathing, no wave
+   animation, no slide-in. Everything stays legible and static. */
+@media (prefers-reduced-motion: reduce) {
+  .dalab-vw__launcher,
+  .dalab-vw__wave > span,
+  .dalab-vw__nudge {
+    animation: none !important;
+  }
+
+  .dalab-vw__wave > span {
+    transform: scaleY(0.7);
+  }
+}

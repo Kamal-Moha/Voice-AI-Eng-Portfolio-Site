@@ -1,0 +1,42 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>DaLab Voice Widget — Dev Harness</title>
+    <style>
+      body {
+        margin: 0;
+        min-height: 100vh;
+        background: #0a0a12;
+        color: #e8e8f0;
+        font-family: system-ui, sans-serif;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+      }
+      .note { max-width: 480px; text-align: center; opacity: 0.7; padding: 2rem; }
+      code { background: #1a1a28; padding: 0.1em 0.4em; border-radius: 4px; }
+    </style>
+  </head>
+  <body>
+    <div class="note">
+      <h1>Voice Widget — Dev Harness</h1>
+      <p>
+        This page exists only for local development of the widget. In production the
+        same bundle mounts into the site's <code>index.html</code>. The launcher
+        button appears bottom-right.
+      </p>
+    </div>
+
+    <!-- The mount point the widget looks for. In production this same div is
+         placed in the site's index.html with the correct token endpoint. -->
+    <div
+      id="dalab-voice-widget"
+      data-token-endpoint="http://localhost:8000/getToken"
+      data-accent="#002CF2"
+    ></div>
+
+    <script type="module" src="/src/main.tsx"></script>
+  </body>
+</html>

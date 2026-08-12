@@ -456,13 +456,19 @@
 
   <script src="js/main.js?v=3"></script>
 
-  <!-- Script that Embeds the Livekit Voice Agent -->
-  <script
-  src="https://cloud.livekit.io/embed-popup.js"
-  data-lk-agent="CA_dCQJM7RwZ2Vv"
-  data-lk-color="#002CF2"
-  data-lk-theme="dark">
-  </script>
-  
+  <!-- DaLab AI voice widget (React island, bundled from /voice-widget source
+       by CI into public/voice-widget/). data-token-endpoint points at the
+       deployed FastAPI token server on Cloud Run.
+       ⚠️ Replace TOKEN_SERVER_URL below with the token-server *.run.app URL
+       (from the token-server-deployment workflow output) before this works.
+       Bump ?v= whenever the widget bundle changes to bust the browser cache. -->
+  <link rel="stylesheet" href="voice-widget/voice-widget.css?v=1">
+  <div
+    id="dalab-voice-widget"
+    data-token-endpoint="https://token-server-ns3ynaeo3q-ue.a.run.app/getToken"
+    data-accent="#002CF2"
+  ></div>
+  <script defer src="voice-widget/voice-widget.js?v=1"></script>
+
 </body>
 </html>

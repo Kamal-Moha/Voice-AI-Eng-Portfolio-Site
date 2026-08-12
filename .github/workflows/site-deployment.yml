@@ -6,9 +6,11 @@ on:
       - main
     paths:
       - 'website/**'
+      - 'voice-widget/**'
       - .github/workflows/site-deployment.yml
       - '!website/README.md'
       - '!website/**/*.md'
+      - '!voice-widget/**/*.md'
 
 env:
   ARTIFACT_REPO: 'portfolio-site'
@@ -28,6 +30,25 @@ jobs:
     steps:
       - name: 'Checkout'
         uses: 'actions/checkout@v4'
+
+      # Build the React voice widget (island) BEFORE the Docker build. Vite
+      # writes the bundle to website/public/voice-widget/, which the website
+      # Dockerfile then copies into nginx. The built output is not committed
+      # (see .gitignore) — CI regenerates it from source each deploy.
+      - name: 'Setup Node'
+        uses: 'actions/setup-node@v4'
+        with:
+          node-version: '22'
+          cache: 'npm'
+          cache-dependency-path: voice-widget/package-lock.json
+
+      - name: 'Install widget deps'
+        run: npm ci
+        working-directory: voice-widget
+
+      - name: 'Build widget bundle'
+        run: npm run build
+        working-directory: voice-widget
 
       # Configure Workload Identity Federation and generate an access token.
       #
