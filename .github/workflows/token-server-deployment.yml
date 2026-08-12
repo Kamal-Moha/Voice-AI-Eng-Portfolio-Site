@@ -68,14 +68,17 @@ jobs:
           flags:
             '--allow-unauthenticated --port=${{ env.PORT }} --service-account=${{ secrets.GCP_SERVICE_ACCOUNT }}'
           # Runtime configuration. Secrets come from the GH environment; the rest
-          # are plain config. ALLOWED_ORIGINS must list the browser origins that
-          # are permitted to call /getToken (the live site).
+          # are plain config. We use ALLOWED_ORIGIN_REGEX (a single, comma-free
+          # value) rather than a comma-separated ALLOWED_ORIGINS: Cloud Run splits
+          # env-var VALUES on commas, which silently dropped the www origin and
+          # caused CORS 400s on preflight. The regex matches apex + www in one
+          # value, so nothing gets truncated.
           env_vars: |-
             LIVEKIT_URL=${{ secrets.LIVEKIT_URL }}
             LIVEKIT_API_KEY=${{ secrets.LIVEKIT_API_KEY }}
             LIVEKIT_API_SECRET=${{ secrets.LIVEKIT_API_SECRET }}
             AGENT_NAME=web-agent
-            ALLOWED_ORIGINS=https://dalabai.com,https://www.dalabai.com
+            ALLOWED_ORIGIN_REGEX=https://(www\.)?dalabai\.com
             TOKEN_TTL_SECONDS=900
 
       # The deployed URL — copy this into website/public/index.html's

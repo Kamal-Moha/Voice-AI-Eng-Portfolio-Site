@@ -51,6 +51,16 @@ ALLOWED_ORIGINS = [
     if o.strip()
 ]
 
+# Optional regex that matches allowed origins as a single, COMMA-FREE value.
+# This exists because Cloud Run (and the deploy-cloudrun action) splits env-var
+# VALUES on commas, so a comma-separated ALLOWED_ORIGINS gets truncated to its
+# first entry — silently dropping every origin after the first. A regex needs no
+# comma, so it survives the round-trip intact. In prod we set:
+#   ALLOWED_ORIGIN_REGEX=https://(www\.)?dalabai\.com
+# which matches both the apex and the www host. Starlette uses fullmatch, so it
+# won't accidentally allow look-alikes like https://dalabai.com.evil.com.
+ALLOWED_ORIGIN_REGEX = os.getenv("ALLOWED_ORIGIN_REGEX") or None
+
 # Token time-to-live. The widget only needs enough time to establish the
 # connection; the session itself lives on after the token is consumed.
 TOKEN_TTL_SECONDS = int(os.getenv("TOKEN_TTL_SECONDS", "900"))  # 15 minutes
@@ -60,6 +70,7 @@ app = FastAPI(title="DaLab AI Token Server", version="0.1.0")
 app.add_middleware(
     CORSMiddleware,
     allow_origins=ALLOWED_ORIGINS,
+    allow_origin_regex=ALLOWED_ORIGIN_REGEX,
     allow_credentials=False,
     allow_methods=["POST", "GET", "OPTIONS"],
     allow_headers=["*"],
