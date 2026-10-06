@@ -7,7 +7,7 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 A monorepo for Kamal Muhamed Ahmed's (Voice AI Engineer) portfolio. It has **two
 independently deployable components**:
 
-- **`website/`** — a single-page portfolio site. **Fully static** hand-written
+- **`website/`** — the dalabai.com site. **Fully static** hand-written
   HTML/CSS/vanilla JS, no framework, no build step, no package manager, and no tests.
   Content lives in `website/public/` and is served verbatim by nginx.
 - **`livekit-voice-agent/`** — a Python ([LiveKit Agents](https://docs.livekit.io/agents/))
@@ -21,15 +21,20 @@ redeploys the component whose files changed (see **Deployment**).
 
 ### `website/` (the static site)
 
-- `website/public/index.html` — the entire page. All content (hero, stats, projects,
-  about, capabilities, tech stack, contact) is authored inline here, plus the embedded
-  LiveKit voice widget. Projects are static `<article class="project">` blocks; there is
-  no data file or templating — edit the markup directly to add/change a project.
-- `website/public/js/main.js` — one IIFE handling all interactivity: scroll-reveal
-  (IntersectionObserver), animated stat counters, mobile nav, and **inline YouTube
-  embeds**. Demo videos play in-card via `.js-video` elements carrying a `data-yt`
-  video ID; clicking injects an `<iframe>` into the card's `.project__media`.
-- `website/public/css/styles.css` — all styling.
+- `website/public/index.html` — home page (`/`): the **Dalab on WhatsApp** product
+  landing (voice-first payments assistant, pre-launch). Includes the waitlist form
+  (`#waitlistForm`): set its `data-endpoint` to a JSON form backend (e.g. Formspree);
+  while empty, submitting opens a pre-filled email to `data-fallback-email`.
+- `website/public/business/index.html` — `/business/`: the agency offer (custom voice
+  agents / AI receptionist for home-service businesses), the booking CTA
+  (`<body data-book="...">` → every `.js-book`), the cost calculator, and the embedded
+  LiveKit voice widget (whose agent prompt pitches the business services).
+- Pages use **absolute** asset paths (`/css/...`, `/js/...`) so they work from subpaths;
+  all content is authored inline — edit the markup directly.
+- `website/public/js/main.js` — one IIFE shared by both pages: scroll-reveal
+  (IntersectionObserver), animated stat counters, mobile nav, calculator, CTA wiring,
+  and the waitlist form. Each feature no-ops when its elements aren't on the page.
+- `website/public/css/styles.css` — all styling (shared).
 - `website/public/favicon.svg` — site icon.
 - `website/nginx/default.conf.template` — server config. `${PORT}` is **not** hardcoded;
   the official nginx image runs `envsubst` over `/etc/nginx/templates/` at container
@@ -40,10 +45,10 @@ redeploys the component whose files changed (see **Deployment**).
   nginx template into `/etc/nginx/templates/`.
 
 #### Cache-busting
-`index.html` references assets with manual version query strings (`styles.css?v=4`,
+Both HTML pages reference assets with manual version query strings (`styles.css?v=4`,
 `main.js?v=4`). Because nginx caches these files for 30 days with `immutable`, **bump
-the `?v=` number in `website/public/index.html` whenever you change `styles.css` or
-`main.js`** or returning visitors won't see the update.
+the `?v=` number in both `index.html` and `business/index.html` whenever you change
+`styles.css` or `main.js`** or returning visitors won't see the update.
 
 ### `livekit-voice-agent/` (the voice agent)
 

@@ -1,10 +1,12 @@
 /* ============================================================
-   DaLab AI — Staging Landing Page interactions (vanilla JS)
+   DaLab AI — site interactions (vanilla JS)
    - Mobile nav toggle
    - Scroll-reveal (IntersectionObserver on .reveal)
    - Animated stat counters (data-count / data-suffix)
    - Missed-call money calculator
    - CTA wiring (data-book -> booking URL)
+   - Feature showcase tabs (auto-advance, pause on hover)
+   - Waitlist form (data-endpoint, mailto fallback)
    - Footer year
    ============================================================ */
 (function () {
@@ -141,5 +143,122 @@
     callsRange.addEventListener("input", recalc);
     jobRange.addEventListener("input", recalc);
     recalc();
+  }
+
+  /* ---------- Feature showcase tabs (home page) ---------- */
+  // Each tab swaps the phone screen + story panel. While .show--auto is set,
+  // the active tab's progress bar animates (CSS) and its animationend moves to
+  // the next tab. Hover/focus pauses it; picking a tab stops auto-advance.
+  var show = document.querySelector(".show");
+  var tabs = show ? show.querySelectorAll(".show__tab") : [];
+  if (show && tabs.length) {
+    var screens = show.querySelectorAll(".show__screen");
+    var panels = show.querySelectorAll(".show__panel");
+    var current = 0;
+
+    var select = function (i, focus) {
+      current = i;
+      tabs.forEach(function (t, k) {
+        var on = k === i;
+        t.classList.toggle("is-active", on);
+        t.setAttribute("aria-selected", on ? "true" : "false");
+        t.setAttribute("tabindex", on ? "0" : "-1");
+      });
+      panels.forEach(function (p, k) {
+        p.hidden = k !== i;
+        p.classList.toggle("is-active", k === i);
+      });
+      screens.forEach(function (sc, k) {
+        sc.classList.remove("is-active");
+        if (k === i) { void sc.offsetWidth; sc.classList.add("is-active"); } // restart message animations
+      });
+      if (focus) tabs[i].focus();
+    };
+
+    tabs.forEach(function (t, k) {
+      t.addEventListener("click", function () {
+        show.classList.remove("show--auto");
+        select(k);
+      });
+      t.addEventListener("keydown", function (e) {
+        var dir = e.key === "ArrowRight" ? 1 : e.key === "ArrowLeft" ? -1 : 0;
+        if (!dir) return;
+        e.preventDefault();
+        show.classList.remove("show--auto");
+        select((current + dir + tabs.length) % tabs.length, true);
+      });
+      var bar = t.querySelector(".show__bar i");
+      if (bar) bar.addEventListener("animationend", function () {
+        if (show.classList.contains("show--auto") && k === current) select((current + 1) % tabs.length);
+      });
+    });
+
+    if (!reduceMotion) {
+      show.classList.add("show--auto");
+      show.addEventListener("mouseenter", function () { show.classList.add("show--paused"); });
+      show.addEventListener("mouseleave", function () { show.classList.remove("show--paused"); });
+      show.addEventListener("focusin", function () { show.classList.add("show--paused"); });
+      show.addEventListener("focusout", function () { show.classList.remove("show--paused"); });
+      if ("IntersectionObserver" in window) {
+        new IntersectionObserver(function (entries) {
+          entries.forEach(function (en) { show.classList.toggle("show--running", en.isIntersecting); });
+        }, { threshold: 0.35 }).observe(show);
+      } else {
+        show.classList.add("show--running");
+      }
+    }
+  }
+
+  /* ---------- Waitlist form (home page) ---------- */
+  // POSTs JSON to the form's data-endpoint (e.g. a Formspree URL). If no
+  // endpoint is configured yet, it opens a pre-filled email instead so the
+  // signup still reaches us.
+  var wform = document.getElementById("waitlistForm");
+  var wmsg = document.getElementById("waitlistMsg");
+
+  function say(text, kind) {
+    if (!wmsg) return;
+    wmsg.textContent = text;
+    wmsg.className = "wform__msg" + (kind ? " is-" + kind : "");
+  }
+
+  if (wform) {
+    wform.addEventListener("submit", function (e) {
+      e.preventDefault();
+      var data = {};
+      new FormData(wform).forEach(function (v, k) { data[k] = typeof v === "string" ? v.trim() : v; });
+
+      if (!data.name || !data.whatsapp) { say("Please add your name and WhatsApp number.", "err"); return; }
+      if (!/^\+?[\d\s()-]{9,}$/.test(data.whatsapp)) { say("That WhatsApp number doesn't look right.", "err"); return; }
+      if (!data.consent) { say("Please tick the box so we can message you on WhatsApp.", "err"); return; }
+
+      var endpoint = wform.getAttribute("data-endpoint");
+      if (!endpoint) {
+        var to = wform.getAttribute("data-fallback-email") || "info@dalabai.com";
+        var body = "Name: " + data.name + "\nWhatsApp: " + data.whatsapp +
+          "\nTown: " + (data.town || "-") + "\nMain use: " + (data.use || "-");
+        window.location.href = "mailto:" + to + "?subject=" + encodeURIComponent("Dalab waitlist") +
+          "&body=" + encodeURIComponent(body);
+        say("Your email app should open. Just press send and you're on the list.", "ok");
+        return;
+      }
+
+      var btn = wform.querySelector("button[type=submit]");
+      if (btn) btn.disabled = true;
+      say("Adding you to the list…");
+      fetch(endpoint, {
+        method: "POST",
+        headers: { "Content-Type": "application/json", "Accept": "application/json" },
+        body: JSON.stringify(data)
+      }).then(function (res) {
+        if (!res.ok) throw new Error("HTTP " + res.status);
+        wform.reset();
+        say("You're on the list! We'll message you on WhatsApp when your spot is ready.", "ok");
+      }).catch(function () {
+        say("Something went wrong. Please try again, or email info@dalabai.com.", "err");
+      }).then(function () {
+        if (btn) btn.disabled = false;
+      });
+    });
   }
 })();
